@@ -1,0 +1,21 @@
+{
+    "name": "bolboreta/reader",
+    "type": "project",
+    "require": {
+        "php": "^8.1"
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^9.5",
+        "vimeo/psalm": "^4.24"
+    },
+    "autoload": {
+        "psr-4": {
+            "Bolboreta\\Reader\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Test\\Bolboreta\\Reader\\": "tests/"
+        }
+    }
+}
