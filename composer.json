@@ -1,5 +1,5 @@
 {
-    "name": "bolboreta/reader",
+    "name": "cincho/reader",
     "type": "project",
     "require": {
         "php": "^8.1"
@@ -10,12 +10,12 @@
     },
     "autoload": {
         "psr-4": {
-            "Bolboreta\\Reader\\": "src/"
+            "Cincho\\Reader\\": "src/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Test\\Bolboreta\\Reader\\": "tests/"
+            "Cincho\\Reader\\Test\\": "tests/"
         }
     }
 }
