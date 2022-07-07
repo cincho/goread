@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Cincho\Reader\Test;
+namespace Cincho\Reader\Test\Unit;
 
 use Cincho\Reader\App;
 use PHPUnit\Framework\TestCase;
