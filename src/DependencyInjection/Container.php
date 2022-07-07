@@ -6,8 +6,21 @@ namespace Cincho\Reader\DependencyInjection;
 
 class Container
 {
-    public function get(): mixed
+    private array $dependencies = [];
+
+    public function set(string $key, mixed $value): self
     {
-        return null;
+        $this->dependencies[$key] = $value;
+
+        return $this;
+    }
+
+    public function get(string $key): mixed
+    {
+        if (!isset($this->dependencies[$key])) {
+            throw new \Exception(sprintf('Dependency "%s" could not be resolved by the container.', $key));
+        }
+
+        return $this->dependencies[$key];
     }
 }

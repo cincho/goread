@@ -24,8 +24,9 @@ final class App
         $error_handler = new ErrorHandler();
         set_error_handler([$error_handler, 'handle']);
         $router = $this->container->get(Router::class);
-        $uri = $this->container->get(Request::class)->getUri();
-        $handler = $router->resolve($uri);
+        $uri = $this->container->get(Request::class)->get('REQUEST_URI');
+        $route = $router->resolve($uri);
+        $handler = $this->container->get($route->handler());
 
         $response = $handler();
 
