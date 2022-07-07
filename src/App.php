@@ -5,13 +5,14 @@ declare(strict_types=1);
 namespace Cincho\Reader;
 
 use Cincho\Reader\DependencyInjection\Container;
+use Cincho\Reader\Error\ErrorHandler;
 use Cincho\Reader\Http\Request;
 use Cincho\Reader\Http\Response;
 use Cincho\Reader\Router\Router;
 
 final class App
 {
-    private Container $contaner;
+    private Container $container;
 
     public function setContainer(Container $container): void
     {
@@ -20,7 +21,9 @@ final class App
 
     public function run(): void
     {
-        $router = $this->contaner->get(Router::class);
+        $error_handler = new ErrorHandler();
+        set_error_handler([$error_handler, 'handle']);
+        $router = $this->container->get(Router::class);
         $uri = $this->container->get(Request::class)->getUri();
         $handler = $router->resolve($uri);
 
