@@ -17,6 +17,12 @@ class Router
 
     public function resolve(string $uri): Route
     {
-        return current($this->routes);
+        foreach ($this->routes as $route) {
+            if ($uri === $route->getUri()) {
+                return $route;
+            }
+        }
+
+        throw new \Exception(sprintf('URI %s could not be resolveed', $uri));
     }
 }

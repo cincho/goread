@@ -26,9 +26,10 @@ final class App
         $router = $this->container->get(Router::class);
         $uri = $this->container->get(Request::class)->get('REQUEST_URI');
         $route = $router->resolve($uri);
-        $handler = $this->container->get($route->handler());
+        $handler_definition = $route->getHandler();
+        $handler = $this->container->get($handler_definition[0]);
 
-        $response = $handler();
+        $response = isset($handler_definition[1]) ? $handler->{$handler_definition[1]}() : $handler();
 
         if (!$response instanceof Response) {
             throw new \Exception('A controller must return am instance of Cincho\Reader\Http\Response');
