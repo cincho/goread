@@ -11,6 +11,6 @@ final class RequestTest extends TestCase
 {
     public function testInstanceOf(): void
     {
-        $this->assertInstanceOf(Request::class, new Request());
+        $this->assertInstanceOf(Request::class, new Request([]));
     }
 }

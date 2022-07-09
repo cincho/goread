@@ -42,6 +42,22 @@ class ContainerTest extends TestCase
         $aliased_dependency = $container->get('dependency_one');
     }
 
+    public function testGetResolvedClosureDependency(): void
+    {
+        $container = new Container();
+
+        $dependency = $container->set('closure', function($container) {
+            $object = new \stdClass();
+            $object->description = 'Created from closure';
+            return $object;
+        });
+
+        $dependency = $container->get('closure');
+
+        $this->assertInstanceOf(\stdClass::class, $dependency);
+        $this->assertEquals('Created from closure', $dependency->description);
+    }
+
     public function testGetResolvedDependencyWithDependencies(): void
     {
         $container = new Container();

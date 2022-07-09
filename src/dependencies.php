@@ -11,12 +11,14 @@ use Cincho\Reader\Router\Router;
 
 return function (Container $container) {
     $container
-        ->set('database_dsn', sprintf('sqlite:%s', __DIR__ . '/../../database.sqlite3'))
         ->set(Connection::class, function($container) {
-            $pdo = new \Pdo($container->get('database_dsn'));
+            $dsn = sprintf('sqlite:%s', __DIR__ . '/../../database.sqlite3');
+            $pdo = new \Pdo($dsn);
             return new Connection($pdo);
         })
-        ->set(Request::class, new Request($_SERVER))
+        ->set(Request::class, function($container) {
+            return new Request($_SERVER);
+        })
         ->set(Router::class, new Router())
     ;
 };
