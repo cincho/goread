@@ -19,6 +19,19 @@ final class App
         $this->container = $container;
     }
 
+    public function execute(string $command_name): void
+    {
+        $command = $this->container->get($command_name);
+
+        if (!$command instanceof Command) {
+            throw new \Exception(sprintf('Command %s not found'), $command_name);
+        }
+
+        $return = $command->execute();
+
+        exit($return);
+    }
+
     public function run(): void
     {
         $error_handler = new ErrorHandler();

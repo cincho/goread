@@ -9,4 +9,9 @@ use Cincho\Reader\Database\Connection;
 class SubscriptionRepository
 {
     public function __construct(Connection $connection) {}
+
+    public function findAll(): array
+    {
+        return [];
+    }
 }
