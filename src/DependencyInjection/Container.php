@@ -39,7 +39,13 @@ class Container
            $this->set($key, $dependency);
         }
 
-        return $this->dependencies[$key];
+        $dependency = $this->dependencies[$key];
+
+        if ($dependency instanceof \Closure) {
+            return $dependency($this);
+        }
+
+        return $dependency;
     }
 
     /**
@@ -68,6 +74,5 @@ class Container
         }
 
         return $class->newInstanceArgs($constructor_args);
-
     }
 }
