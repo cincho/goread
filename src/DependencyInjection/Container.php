@@ -33,7 +33,7 @@ class Container
     private function resolve(string $dependency)
     {
         if (!class_exists($dependency)) {
-            throw new \Exception(sprintf('Dependency "%s" could not be resolved by the container.', $key));
+            throw new DependencyCouldNotBeResolvedException(sprintf('Dependency "%s" could not be resolved by the container.', $dependency));
         }
 
         $reflection = new \ReflectionClass($dependency);
