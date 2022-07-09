@@ -6,8 +6,14 @@ namespace Cincho\Reader\DependencyInjection;
 
 class Container
 {
+    /**
+     * List of dependencies.
+     */
     private array $dependencies = [];
 
+    /**
+     * Set a dependency definition.
+     */
     public function set(string $key, mixed $value): self
     {
         $this->dependencies[$key] = $value;
@@ -15,11 +21,17 @@ class Container
         return $this;
     }
 
+    /**
+     * Check whether the dependency is defined or not.
+     */
     public function has(string $key): bool
     {
         return isset($this->dependencies[$key]);
     }
 
+    /**
+     * Get the dependency.
+     */
     public function get(string $key): mixed
     {
         if (!$this->has($key)) {
@@ -30,15 +42,32 @@ class Container
         return $this->dependencies[$key];
     }
 
-    private function resolve(string $dependency)
+    /**
+     * Resolve a dependency. This method is used when the dependency has
+     * not been defined in the container.
+     */
+    private function resolve(string $key): mixed
     {
-        if (!class_exists($dependency)) {
-            throw new DependencyCouldNotBeResolvedException(sprintf('Dependency "%s" could not be resolved by the container.', $dependency));
+        if (!class_exists($key)) {
+            throw new DependencyCouldNotBeResolvedException(sprintf('Dependency "%s" could not be resolved by the container.', $key));
         }
 
-        $reflection = new \ReflectionClass($dependency);
-        
-        return $reflection->newInstance();
+        $class = new \ReflectionClass($key);
+        $constructor = $class->getConstructor();
+
+        if (!$constructor instanceof \ReflectionMethod) {
+            return $class->newInstance();
+        }
+
+        $constructor_args = [];
+        $constructor_parameters = $constructor->getParameters();
+
+        foreach ($constructor_parameters as $constructor_parameter) {
+            $parameter_type = $constructor_parameter->getType()->getName();
+            $constructor_args[] = $this->get($parameter_type);
+        }
+
+        return $class->newInstanceArgs($constructor_args);
 
     }
 }

@@ -30,7 +30,7 @@ class ContainerTest extends TestCase
         $this->assertInstanceOf(DependencyOne::class, $aliased_dependency);
     }
 
-    public function testGetAutowiredDependency(): void
+    public function testGetResolvedDependency(): void
     {
         $container = new Container();
 
@@ -42,7 +42,7 @@ class ContainerTest extends TestCase
         $aliased_dependency = $container->get('dependency_one');
     }
 
-    public function testGetAutowiredDependencyWithDependencies(): void
+    public function testGetResolvedDependencyWithDependencies(): void
     {
         $container = new Container();
 
