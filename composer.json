@@ -12,12 +12,14 @@
     },
     "autoload": {
         "psr-4": {
-            "Cincho\\Reader\\": "src/"
+            "Cincho\\Framework\\": "src/Framework/",
+            "Cincho\\Reader\\": "src/Reader/"
         }
     },
     "autoload-dev": {
         "psr-4": {
-            "Cincho\\Reader\\Test\\": "tests/"
+            "Cincho\\Framework\\Test\\": "tests/Framework/",
+            "Cincho\\Reader\\Test\\": "tests/Reader/"
         }
     }
 }
