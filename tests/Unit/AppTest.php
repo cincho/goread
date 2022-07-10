@@ -18,6 +18,7 @@ final class AppTest extends TestCase
     public function testRun(): void
     {
         $app = new App();
+        $app->setContainer(new Container());
 
         $this->assertInstanceOf(App::class, $app);
     }
