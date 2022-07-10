@@ -15,10 +15,15 @@ class Router
         return $this;
     }
 
-    public function resolve(string $uri): Route
+    public function getRoutes(): array
+    {
+        return $this->routes;
+    }
+
+    public function resolve(string $uri, string $method): Route
     {
         foreach ($this->routes as $route) {
-            if ($uri === $route->getUri()) {
+            if ($uri === $route->getUri() && in_array($method, $route->getMethods())) {
                 return $route;
             }
         }

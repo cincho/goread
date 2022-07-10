@@ -38,12 +38,13 @@ final class App
         set_error_handler([$error_handler, 'handle']);
         $router = $this->container->get(Router::class);
         $uri = $this->container->get(Request::class)->get('REQUEST_URI');
+        $method = $this->container->get(Request::class)->get('REQUEST_METHOD');
 
         if (!$uri) {
             exit(1);
         }
 
-        $route = $router->resolve($uri);
+        $route = $router->resolve($uri, $method);
         $handler_definition = $route->getHandler();
         $handler = $this->container->get($handler_definition[0]);
 
