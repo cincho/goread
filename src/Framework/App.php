@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Cincho\Framework;
 
+use Cincho\Framework\Command\CommandInterface;
 use Cincho\Framework\DependencyInjection\Container;
 use Cincho\Framework\Error\ErrorHandler;
 use Cincho\Framework\Http\Request;
@@ -23,8 +24,8 @@ final class App
     {
         $command = $this->container->get($command_name);
 
-        if (!$command instanceof Command) {
-            throw new \Exception(sprintf('Command %s not found'), $command_name);
+        if (!$command instanceof CommandInterface) {
+            throw new \Exception(sprintf('Command %s not found', $command_name));
         }
 
         $return = $command->execute();

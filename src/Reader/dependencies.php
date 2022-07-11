@@ -2,6 +2,7 @@
 
 declare(strict_types=1);
 
+use Cincho\Framework\Command\Database\MigrateCommand;
 use Cincho\Framework\Database\Connection;
 use Cincho\Framework\DependencyInjection\Container;
 use Cincho\Framework\Http\Request;
@@ -11,7 +12,7 @@ use Cincho\Reader\Controller\SubscriptionController;
 
 return function (Container $container) {
     $container
-        ->set(Connection::class, function($container) {
+        ->set(Connection::class, function ($container) {
             $dsn = sprintf('sqlite:%s', __DIR__ . '/../../../database.sqlite3');
             $pdo = new \Pdo($dsn);
             return new Connection($pdo);
@@ -20,5 +21,8 @@ return function (Container $container) {
             return new Request($_SERVER);
         })
         ->set(Router::class, new Router())
+        ->set(MigrateCommand::class, function ($container) {
+            return new MigrateCommand($container, __DIR__ . '/Database/Migration');
+        })
     ;
 };
