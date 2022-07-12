@@ -3,6 +3,7 @@
 declare(strict_types=1);
 
 use Cincho\Framework\Command\Database\MigrateCommand;
+use Cincho\Framework\Command\Database\SeedCommand;
 use Cincho\Framework\Database\Connection;
 use Cincho\Framework\DependencyInjection\Container;
 use Cincho\Framework\Http\Request;
@@ -23,6 +24,9 @@ return function (Container $container) {
         ->set(Router::class, new Router())
         ->set(MigrateCommand::class, function ($container) {
             return new MigrateCommand($container, __DIR__ . '/Database/Migration');
+        })
+        ->set(SeedCommand::class, function ($container) {
+            return new SeedCommand($container, __DIR__ . '/Database/Seeder');
         })
     ;
 };

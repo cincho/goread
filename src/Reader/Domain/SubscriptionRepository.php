@@ -8,7 +8,7 @@ use Cincho\Framework\Database\Connection;
 
 class SubscriptionRepository
 {
-    public function __construct(Connection $connection) {}
+    public function __construct(private Connection $connection) {}
 
     public function findAll(): array
     {

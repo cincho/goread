@@ -15,7 +15,8 @@ class Migration20220711000000 implements MigrationInterface
     {
         $sql = <<<SQL
             CREATE TABLE IF NOT EXISTS Users (
-                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT
+                id INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+                username TEXT NOT NULL UNIQUE
             )
         SQL;
 
