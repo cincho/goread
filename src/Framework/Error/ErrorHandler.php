@@ -6,8 +6,13 @@ namespace Cincho\Framework\Error;
 
 class ErrorHandler
 {
-    public function handle($errno, $errstr, $errfile, $errline)
+    public function error($errno, $errstr, $errfile, $errline)
     {
-        var_dump($errno, $errstr, $errfile, $errline);
+        var_dump($errno, $errstr, $errfile, $errline);die();
+    }
+
+    public function exception(\Throwable $exception)
+    {
+        var_dump($exception);die();
     }
 }

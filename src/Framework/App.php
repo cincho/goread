@@ -35,8 +35,11 @@ final class App
 
     public function run(): void
     {
-        $error_handler = new ErrorHandler();
-        set_error_handler([$error_handler, 'handle']);
+        $error_handler =$this->container->get(ErrorHandler::class);
+        set_error_handler([$error_handler, 'error']);
+        set_exception_handler([$error_handler, 'exception']);
+
+        throw new \Exception('a');
         $router = $this->container->get(Router::class);
         $uri = $this->container->get(Request::class)->get('REQUEST_URI');
         $method = $this->container->get(Request::class)->get('REQUEST_METHOD');
