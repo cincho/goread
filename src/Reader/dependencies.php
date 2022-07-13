@@ -8,6 +8,7 @@ use Cincho\Framework\Database\Connection;
 use Cincho\Framework\DependencyInjection\Container;
 use Cincho\Framework\Http\Request;
 use Cincho\Framework\Router\Router;
+use Cincho\Framework\Template\Engine;
 use Cincho\Reader\Controller\IndexController;
 use Cincho\Reader\Controller\SubscriptionController;
 
@@ -27,6 +28,11 @@ return function (Container $container) {
         })
         ->set(SeedCommand::class, function ($container) {
             return new SeedCommand($container, __DIR__ . '/Database/Seeder');
+        })
+        ->set(Engine::class, function ($container) {
+            $engine = new Engine();
+            $engine->appendDirectory(__DIR__ . '/Template/');
+            return $engine;
         })
     ;
 };

@@ -5,27 +5,16 @@ declare(strict_types=1);
 namespace Cincho\Reader\Controller;
 
 use Cincho\Framework\Http\Response;
+use Cincho\Framework\Template\Engine;
 
 class IndexController
 {
+    public function __construct(private Engine $engine)
+    {}
+
     public function __invoke(): Response
     {
-        $html = <<<HTML
-        <!DOCTYPE html>
-        <html>
-            <head>
-                <meta charset="UTF-8">
-                <meta name="viewport" content="width=device-width, initial-scale=1">
-                <title>Reader</title>
-                <link rel="icon" href="data:image/x-icon;base64,AAABAAEAEBAQAAEABAAoAQAAFgAAACgAAAAQAAAAIAAAAAEABAAAAAAAgAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAA/4QAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAERERERERERERAAAAAAAAERAQAAAAAAEBEAEAAAAAEAEQABAAAAEAARAAAQAAEAABEAAAEAEAAAEQAAABEAAAARAAAAEQAAABEAAAEAEAAAEQAAEAABAAARAAEAAAAQABEAEAAAAAEAEQEAAAAAABAREAAAAAAAAREREREREREREAAAAAP/wAAF/6AABv9gAAd+4AAHveAAB9vgAAfn4AAH5+AAB9vgAAe94AAHfuAABv9gAAX/oAAD/8AAAAAAAA" type="image/x-icon" />
-                <link rel="stylesheet" href="/css/app.css">
-            </head>
-            <body>
-                <div id="app"></div>
-                <script src="/js/app.js"></script>
-            </body>
-        </html>
-        HTML;
+        $html = $this->engine->render('index.php');
 
         return new Response($html);
     }
