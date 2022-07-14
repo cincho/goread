@@ -21,5 +21,8 @@
             "Cincho\\Framework\\Test\\": "tests/Framework/",
             "Cincho\\Reader\\Test\\": "tests/Reader/"
         }
+    },
+    "scripts": {
+        "test": "php vendor/bin/phpunit"
     }
 }
