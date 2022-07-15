@@ -15,19 +15,38 @@ class Engine
         return $this;
     }
 
-    public function render(string $template, array $data = []): string
+    public function extend(string $template)
+    {
+        $this->extend = $this->templateFilename($template);
+    }
+
+    public function start(string $id)
+    {
+        if (isset($this->components[$id])) {
+            return;
+        }
+
+        ob_start();
+        $this->components[$id] = null;
+    }
+
+    public function end(string $id)
+    {
+        if (isset($this->components[$id])) {
+            return;
+        }
+
+        $content = ob_get_clean();
+        $this->components[$id] = $content;
+    }
+
+    private function templateFilename(string $template): string
     {
         foreach ($this->directories as $dir) {
             $filename = sprintf('%s%s', $dir, $template);
 
             if (file_exists($filename)) {
-                ob_start();
-                extract($data);
-                require_once($filename);
-                $content = ob_get_contents();
-                ob_end_clean();
-
-                return $content;
+                return $filename;
             }
         }
 
@@ -35,5 +54,23 @@ class Engine
             $template,
             implode('", "', $this->directories)
         ));
+    }
+
+    public function render(string $template, array ...$data): string
+    {
+        $filename = $this->templateFilename($template);
+
+        ob_start();
+        include($filename);
+        
+        if ($this->extend) {
+            include($this->extend);
+        }
+
+        $content = ob_get_contents();
+
+        ob_end_clean();
+
+        return $content;
     }
 }
