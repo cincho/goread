@@ -6,6 +6,9 @@ namespace Cincho\Framework\Template;
 
 class Engine
 {
+    private string $template;
+    private ?string $extend;
+    private array $components = [];
     private array $directories = [];
 
     public function appendDirectory(string $directory): self
@@ -23,6 +26,7 @@ class Engine
     public function start(string $id)
     {
         if (isset($this->components[$id])) {
+            echo $this->components[$id];
             return;
         }
 
@@ -59,10 +63,11 @@ class Engine
     public function render(string $template, array ...$data): string
     {
         $filename = $this->templateFilename($template);
+        $this->template = $filename;
 
         ob_start();
         include($filename);
-        
+
         if ($this->extend) {
             include($this->extend);
         }
