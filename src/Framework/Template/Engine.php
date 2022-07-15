@@ -7,7 +7,7 @@ namespace Cincho\Framework\Template;
 class Engine
 {
     private string $template;
-    private ?string $extend;
+    private ?string $extend = null;
     private array $components = [];
     private array $directories = [];
 
@@ -18,6 +18,11 @@ class Engine
         return $this;
     }
 
+    public function getDirectories(): array
+    {
+        return $this->directories;
+    }
+
     public function extend(string $template)
     {
         $this->extend = $this->templateFilename($template);
@@ -26,17 +31,19 @@ class Engine
     public function start(string $id)
     {
         if (isset($this->components[$id])) {
-            echo $this->components[$id];
+            ob_start();
             return;
         }
 
         ob_start();
         $this->components[$id] = null;
     }
-
+    
     public function end(string $id)
     {
         if (isset($this->components[$id])) {
+            ob_get_clean();
+            echo $this->components[$id];
             return;
         }
 
