@@ -15,7 +15,7 @@ use Cincho\Reader\Controller\SubscriptionController;
 return function (Container $container) {
     $container
         ->set(Connection::class, function ($container) {
-            $dsn = sprintf('sqlite:%s', __DIR__ . '/../../../database.sqlite3');
+            $dsn = sprintf('sqlite:%s', __DIR__ . '/../../database.sqlite3');
             $pdo = new \Pdo($dsn);
             return new Connection($pdo);
         })
